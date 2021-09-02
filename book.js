@@ -39,7 +39,7 @@ const displayBooks = data => {
 
 
     //slicing books array to display
-    const books = data.docs.slice(0, 25);
+    const books = data.docs.slice(0, 24);
     const searchResult = document.getElementById('search-result');
     searchResult.textContent = '';
 
