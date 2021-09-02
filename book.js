@@ -3,7 +3,7 @@ const searchBooks = () => {
     // search field 
     const searchFiled = document.getElementById('input-field');
     const searchText = searchFiled.value;
-    if (searchText == '') {
+    if (searchText === '') {
         alert("Please write book name");
     }
     else {
@@ -14,7 +14,6 @@ const searchBooks = () => {
         fetch(url)
             .then(res => res.json())
             .then(data => displayBooks(data))
-
     }
     toggleSpinner('block');
 }
@@ -30,7 +29,7 @@ const displayBooks = data => {
     totalResult.innerHTML = `<h2>Total Book Found: ${data.numFound}</h2>`
 
     //slicing books array to display
-    const books = data.docs.slice(0, 40);
+    const books = data.docs.slice(0, 25);
     const searchResult = document.getElementById('search-result');
     searchResult.textContent = '';
 
@@ -47,7 +46,7 @@ const displayBooks = data => {
             <div class="card-body">
                 <h4 class="card-title">'${book.title}'</h4>
                 <h6 class="card-text">Author Name: ${book.author_name ? book.author_name.slice(0, 1) : 'Author Not Found'}</h6>
-                <h6 class="card-text">Publisher: ${book.publisher ? book.publisher.slice(0, 1) : 'Publisher Not Available'}</h6>
+                <h6 class="card-text">Publisher: ${book.publisher ? book.publisher.slice(0, 3) : 'Publisher Not Available'}</h6>
                 <h6 class="card-text">First publish year: ${book.first_publish_year}</h6>
             </div>
         </div>
