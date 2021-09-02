@@ -4,9 +4,12 @@ const searchBooks = () => {
     const searchFiled = document.getElementById('input-field');
     const searchText = searchFiled.value;
     if (searchText === '') {
-        alert("Please write book name");
+        toggleSpinner('none')
+        alert("Please write book name")
+
     }
     else {
+        toggleSpinner('block');
         // clear input data 
         searchFiled.value = '';
         // load data 
@@ -15,7 +18,7 @@ const searchBooks = () => {
             .then(res => res.json())
             .then(data => displayBooks(data))
     }
-    toggleSpinner('block');
+
 }
 //load spinnier
 const toggleSpinner = displayStyle => {
@@ -26,7 +29,14 @@ const toggleSpinner = displayStyle => {
 const displayBooks = data => {
     // show total search result 
     let totalResult = document.getElementById('total-results');
-    totalResult.innerHTML = `<h2>Total Book Found: ${data.numFound}</h2>`
+    const number = data.numFound;
+    if (number < 1) {
+        totalResult.innerHTML = `<h2>No Result Found</h2>`
+    }
+    else {
+        totalResult.innerHTML = `<h2>Total Book Found: ${number}</h2>`
+    }
+
 
     //slicing books array to display
     const books = data.docs.slice(0, 25);
@@ -46,7 +56,7 @@ const displayBooks = data => {
             <div class="card-body">
                 <h4 class="card-title">'${book.title}'</h4>
                 <h6 class="card-text">Author Name: ${book.author_name ? book.author_name.slice(0, 1) : 'Author Not Found'}</h6>
-                <h6 class="card-text">Publisher: ${book.publisher ? book.publisher.slice(0, 3) : 'Publisher Not Available'}</h6>
+                <h6 class="card-text">Publisher: ${book.publisher ? book.publisher.slice(0, 1) : 'Publisher Not Available'}</h6>
                 <h6 class="card-text">First publish year: ${book.first_publish_year}</h6>
             </div>
         </div>
